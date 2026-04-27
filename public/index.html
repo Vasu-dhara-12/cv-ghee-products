@@ -1,12 +1,169 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>VC Ghee Exports</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #2c3e50;
+      padding: 15px 30px;
+    }
+
+    .navbar h2 {
+      color: #fff;
+      margin: 0;
+    }
+
+    .nav-links a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .nav-links a:hover {
+      color: #f1c40f;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      background: url('https://images.unsplash.com/photo-1604908176997-125f25cc6f3d') no-repeat center center/cover;
+      height: 80vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 50px;
+      background: rgba(0,0,0,0.5);
+      padding: 20px;
+    }
+
+    /* PRODUCTS */
+    .products {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .product-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card h3 {
+      margin: 10px 0;
+    }
+
+    /* ABOUT */
+    .about {
+      background: #f4f4f4;
+      padding: 40px;
+      text-align: center;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: #2c3e50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Welcome to VC Ghee Exports</h1>
-  <a href="products.html">View Products</a>
-  <a href="contact.html">Contact Us</a>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <h2>VC Ghee Exports</h2>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <div class="hero">
+    <h1>Pure Organic Ghee Exported Worldwide</h1>
+  </div>
+
+  <!-- PRODUCTS SECTION -->
+  <section class="products">
+    <h2>Our Premium Products</h2>
+
+    <div class="product-container">
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1625944525903-d8c86a6e7f14" alt="Ghee 1">
+        <h3>Classic Cow Ghee</h3>
+        <p>Rich aroma and taste</p>
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1615486363972-5b6e3bbf9e0d" alt="Ghee 2">
+        <h3>Organic Buffalo Ghee</h3>
+        <p>High nutritional value</p>
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1604908554161-ec1e5c87fbb5" alt="Ghee 3">
+        <h3>Premium Export Quality</h3>
+        <p>Best for international markets</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <h2>About Us</h2>
+    <p>
+      We are leading exporters of high-quality ghee products. 
+      Our mission is to deliver purity, health, and tradition worldwide.
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>© 2026 VC Ghee Exports | All Rights Reserved</p>
+  </div>
+
 </body>
 </html>
