@@ -1,23 +1,27 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const path = require('path');
+const express = require("express");
+const cors = require("cors");
+const path = require("path");
+const connectDB = require("./config/db");
 
 const app = express();
 
+// DB connect
+connectDB();
+
 // Middleware
+app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
 
 // Routes
-app.use('/api/products', require('./routes/productRoutes'));
-app.use('/api/inquiries', require('./routes/inquiryRoutes'));
+app.use("/api/products", require("./routes/productRoutes"));
+app.use("/api/inquiry", require("./routes/inquiryRoutes"));
 
-// DB Connection
-mongoose.connect('mongodb://localhost:27017/gheeDB')
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+// Serve frontend
+app.use(express.static(path.join(__dirname, "public")));
 
-// Start server
-app.listen(8080, () => {
-  console.log('Server running on http://localhost:8080');
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
+
+const PORT = 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
