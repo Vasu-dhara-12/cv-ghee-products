@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Expose backend port (change if your app uses different port)
-EXPOSE 3000
+EXPOSE 5000
 
 # Start the application
 CMD ["npm", "start"]
