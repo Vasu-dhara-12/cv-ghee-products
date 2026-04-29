@@ -7,7 +7,12 @@
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
-  "keywords": ["ghee", "nodejs", "express", "mongodb"],
+  "keywords": [
+    "ghee",
+    "nodejs",
+    "express",
+    "mongodb"
+  ],
   "author": "Vasudhara",
   "license": "ISC",
   "dependencies": {
