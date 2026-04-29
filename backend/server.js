@@ -6,40 +6,51 @@ const connectDB = require("./config/db");
 const app = express();
 
 // =======================
-// DB Connection
-// =======================
-connectDB();
-
-// =======================
 // Middleware
 // =======================
 app.use(cors());
 app.use(express.json());
 
 // =======================
-// API Routes
+// DB Connection (SAFE)
 // =======================
-app.use("/api/products", require("./routes/productRoutes"));
-app.use("/api/inquiry", require("./routes/inquiryRoutes"));
+const startServer = async () => {
+  try {
+    await connectDB();
 
-// =======================
-// Serve frontend static files
-// =======================
-app.use(express.static(path.join(__dirname, "public")));
+    console.log("✅ MongoDB Connected");
 
-// =======================
-// Fallback route (IMPORTANT for Express 5)
-// =======================
-// This handles React/HTML routing safely
-app.use((req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
+    // =======================
+    // API Routes
+    // =======================
+    app.use("/api/products", require("./routes/productRoutes"));
+    app.use("/api/inquiry", require("./routes/inquiryRoutes"));
 
-// =======================
-// Start Server
-// =======================
-const PORT = process.env.PORT || 5000;
+    // =======================
+    // Serve frontend static files
+    // =======================
+    app.use(express.static(path.join(__dirname, "public")));
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+    // =======================
+    // Fallback route (safe for SPA)
+    // =======================
+    app.use((req, res) => {
+      res.sendFile(path.join(__dirname, "public", "index.html"));
+    });
+
+    // =======================
+    // Start Server
+    // =======================
+    const PORT = process.env.PORT || 5000;
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+
+  } catch (err) {
+    console.error("❌ Server startup failed:", err.message);
+    process.exit(1);
+  }
+};
+
+startServer();
