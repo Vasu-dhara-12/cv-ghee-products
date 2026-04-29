@@ -13,23 +13,31 @@ spec:
         app: cv-ghee-backend
     spec:
       containers:
-      - name: backend
-        image: vasudhara12/cv-ghee-backend:latest
-        ports:
-        - containerPort: 5000
+        - name: backend
+          image: vasudhara12/cv-ghee-backend:latest
+          ports:
+            - containerPort: 5000
+
+          env:
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: MONGO_URI
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: backend-service
 spec:
-  type: ClusterIP
   selector:
     app: cv-ghee-backend
   ports:
-    - protocol: TCP
-      port: 5000
+    - port: 5000
       targetPort: 5000
+  type: ClusterIP
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -46,20 +54,21 @@ spec:
         app: cv-ghee-frontend
     spec:
       containers:
-      - name: frontend
-        image: vasudhara12/cv-ghee-frontend:latest
-        ports:
-        - containerPort: 80
+        - name: frontend
+          image: vasudhara12/cv-ghee-frontend:latest
+          ports:
+            - containerPort: 80
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: frontend-service
 spec:
-  type: LoadBalancer   # ✅ CHANGED HERE
   selector:
     app: cv-ghee-frontend
   ports:
-    - protocol: TCP
-      port: 80
+    - port: 80
       targetPort: 80
+      nodePort: 30007
+  type: LoadBalancer
