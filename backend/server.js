@@ -6,51 +6,44 @@ const connectDB = require("./config/db");
 const app = express();
 
 // =======================
+// Load env (VERY IMPORTANT)
+// =======================
+require("dotenv").config();
+
+// =======================
+// DB Connection
+// =======================
+connectDB();
+
+// =======================
 // Middleware
 // =======================
 app.use(cors());
 app.use(express.json());
 
 // =======================
-// DB Connection (SAFE)
+// API Routes
 // =======================
-const startServer = async () => {
-  try {
-    await connectDB();
+app.use("/api/products", require("./routes/productRoutes"));
+app.use("/api/inquiry", require("./routes/inquiryRoutes"));
 
-    console.log("✅ MongoDB Connected");
+// =======================
+// Serve frontend static files
+// =======================
+app.use(express.static(path.join(__dirname, "public")));
 
-    // =======================
-    // API Routes
-    // =======================
-    app.use("/api/products", require("./routes/productRoutes"));
-    app.use("/api/inquiry", require("./routes/inquiryRoutes"));
+// =======================
+// Fallback route (FIXED for Express 5)
+// =======================
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
-    // =======================
-    // Serve frontend static files
-    // =======================
-    app.use(express.static(path.join(__dirname, "public")));
+// =======================
+// Start Server
+// =======================
+const PORT = process.env.PORT || 5000;
 
-    // =======================
-    // Fallback route (safe for SPA)
-    // =======================
-    app.use((req, res) => {
-      res.sendFile(path.join(__dirname, "public", "index.html"));
-    });
-
-    // =======================
-    // Start Server
-    // =======================
-    const PORT = process.env.PORT || 5000;
-
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
-    });
-
-  } catch (err) {
-    console.error("❌ Server startup failed:", err.message);
-    process.exit(1);
-  }
-};
-
-startServer();
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
