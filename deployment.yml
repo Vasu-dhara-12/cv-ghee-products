@@ -6,34 +6,30 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: backend
+      app: cv-ghee-backend
   template:
     metadata:
       labels:
-        app: backend
+        app: cv-ghee-backend
     spec:
       containers:
       - name: backend
         image: vasudhara12/cv-ghee-backend:latest
         ports:
         - containerPort: 5000
-        env:
-        - name: MONGO_URI
-          value: "mongodb://mongo:27017/gheeDB"
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: backend-service
 spec:
-  selector:
-    app: backend
-  ports:
-    - port: 5000
-      targetPort: 5000
   type: ClusterIP
-
+  selector:
+    app: cv-ghee-backend
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -43,28 +39,27 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: frontend
+      app: cv-ghee-frontend
   template:
     metadata:
       labels:
-        app: frontend
+        app: cv-ghee-frontend
     spec:
       containers:
       - name: frontend
         image: vasudhara12/cv-ghee-frontend:latest
         ports:
         - containerPort: 80
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: frontend-service
 spec:
+  type: LoadBalancer   # ✅ CHANGED HERE
   selector:
-    app: frontend
+    app: cv-ghee-frontend
   ports:
-    - port: 80
+    - protocol: TCP
+      port: 80
       targetPort: 80
-      nodePort: 30007
-  type: NodePort
