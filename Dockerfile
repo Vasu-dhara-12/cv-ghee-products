@@ -1,20 +1,19 @@
-# Use official Node.js image
 FROM node:18
 
 # Set working directory
-WORKDIR /app
+WORKDIR /app/backend
 
-# Copy package files first (for caching)
-COPY package*.json ./
+# Copy backend package.json
+COPY backend/package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy all project files
-COPY . .
+# Copy backend code
+COPY backend .
 
-# Expose backend port (change if your app uses different port)
+# Expose port
 EXPOSE 5000
 
-# Start the application
+# Start app
 CMD ["npm", "start"]
