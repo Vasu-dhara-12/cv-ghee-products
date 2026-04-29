@@ -16,10 +16,11 @@ app.use(express.json());
 app.use("/api/products", require("./routes/productRoutes"));
 app.use("/api/inquiry", require("./routes/inquiryRoutes"));
 
-// Serve frontend
+// Serve frontend static files
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("*", (req, res) => {
+// ✅ FIXED fallback route (instead of app.get("*"))
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
