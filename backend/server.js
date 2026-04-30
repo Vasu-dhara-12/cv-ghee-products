@@ -1,4 +1,12 @@
+
 const express = require("express");
+xconst express = require("express");
+const cors = require("cors");
+const path = require("path");
+const dotenv = require("dotenv");
+const connectDB = require("./config/db");
+
+>>>>>>> 7daa8a2 (your changes)
 const app = express();
 
 app.get("/", (req, res) => {

@@ -1,3 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: cv-ghee-backend
+  ports:
+    - port: 5000
+      targetPort: 5000
+  type: ClusterIP
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,30 +26,16 @@ spec:
     spec:
       containers:
         - name: backend
-          image: vasudhara12/cv-ghee-backend:latest
+          image: vasudhara12/cv-ghee-app:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 5000
-
           env:
             - name: MONGO_URI
               valueFrom:
                 secretKeyRef:
                   name: mongo-secret
                   key: MONGO_URI
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: backend-service
-spec:
-  selector:
-    app: cv-ghee-backend
-  ports:
-    - port: 5000
-      targetPort: 5000
-  type: ClusterIP
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -58,7 +56,6 @@ spec:
           image: vasudhara12/cv-ghee-frontend:latest
           ports:
             - containerPort: 80
-
 ---
 apiVersion: v1
 kind: Service
