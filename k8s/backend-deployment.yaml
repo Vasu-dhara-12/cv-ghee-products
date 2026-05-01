@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cv-ghee-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cv-ghee-backend
+  template:
+    metadata:
+      labels:
+        app: cv-ghee-backend
+    spec:
+      containers:
+        - name: backend
+          image: vasudhara12/cv-ghee-backend:latest
+          ports:
+            - containerPort: 5000
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: cv-ghee-backend
+  ports:
+    - port: 80
+      targetPort: 5000
+  type: LoadBalancer            
